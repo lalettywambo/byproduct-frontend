@@ -277,3 +277,140 @@ a:focus-visible {
   align-items: center;
   margin-top: 1.5rem;
 }
+
+/* The pop-up message after an action, fixed to the bottom of the screen. */
+.notice-bar {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  z-index: 10;
+}
+.notice-bar .notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0;
+  border: 1px solid var(--done);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+}
+.notice-close {
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ---------- Dashboard ---------- */
+.top-actions { margin: 1rem 0 0; }
+.dash-section { margin-top: 2rem; }
+.dash-section .empty { padding: 0.5rem 0; }
+.row-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.row-text { margin: 0; }
+.buyer-label {
+  color: var(--accent);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.need-card,
+.pickup-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+/* A coloured edge: teal when I'm the buyer, amber when I'm the seller. */
+.pickup-row.buyer { border-left: 4px solid var(--accent); }
+.pickup-row.seller { border-left: 4px solid var(--amber); }
+
+/* An ActionButton: the button with its error underneath. */
+.action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.action .error-box { margin: 0.25rem 0 0; }
+
+details.past { margin-top: 1rem; }
+details.past summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+/* Status pills on pickups, and the small tag on listings */
+.pill,
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.pill.amber { background: var(--amber-soft); color: var(--amber); }
+.pill.teal { background: var(--accent-soft); color: var(--accent); }
+.pill.green { background: var(--done-soft); color: var(--done); }
+.pill.red { background: var(--bad-soft); color: var(--bad); }
+.tag { border: 1px solid var(--line); color: var(--muted); }
+.tag.live { border-color: var(--done); color: var(--done); }
+
+/* ---------- A need's progress bar ---------- */
+.progress-bar {
+  display: flex;
+  height: 14px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+.progress-bar .collected,
+.dot.collected { background: var(--done); }
+.progress-bar .agreed,
+.dot.agreed { background: var(--accent); }
+.progress-bar .waiting,
+.dot.waiting { background: var(--amber); }
+.progress-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 0.35rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+
+/* ---------- Forms with two inputs side by side ---------- */
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 0.75rem;
+}
+.two-columns label { display: block; margin-top: 0.75rem; margin-bottom: 0.25rem; }
+textarea { min-height: 88px; }

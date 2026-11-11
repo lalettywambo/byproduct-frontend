@@ -1,5 +1,5 @@
 // Small helpers for showing API data, used by many pages.
-import { ApiError, errorMessages } from './api';
+import { api, ApiError, errorMessages } from './api';
 
 export const LOADING_TEXT = 'Loading… the server can take up to a minute to wake up.';
 
@@ -38,6 +38,21 @@ export function formatDate(text) {
 // Today in local time as "YYYY-MM-DD" (the en-CA format), for <input type="date" min=...>.
 export function today() {
   return new Date().toLocaleDateString('en-CA');
+}
+
+// Why a listing is or isn't live. The API only says is_live, so we work out the reason.
+// Dates in "YYYY-MM-DD" form can be compared as text.
+export function listingStatus(listing) {
+  if (listing.is_live) return 'Live';
+  if (listing.available_until < today()) return 'Expired';
+  if (listing.kg_left <= 0) return 'All promised';
+  return 'Withdrawn';
+}
+
+// For action buttons: POST to e.g. /pickups/3/accept/ and return the API's "message".
+export async function postAction(path) {
+  const data = await api(path, { method: 'POST' });
+  return data.message;
 }
 
 // Split an API error for a form:
