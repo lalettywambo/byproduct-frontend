@@ -1,111 +1,279 @@
+/* ---------- Design tokens (from the ByProduct concept page) ---------- */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  --bg: #eef2f0; --surface: #fbfcfb; --ink: #14211c; --muted: #52615a; --line: #cdd8d2;
+  --accent: #0b7a6b; --accent-ink: #ffffff; --accent-soft: #dcefe9;
+  --amber: #a85d06; --amber-soft: #fdf0dc;
+  --done: #15803d; --done-soft: #e3f4e8;
+  --bad: #b42318; --bad-soft: #fdecea;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1412; --surface: #151d1a; --ink: #e2ebe6; --muted: #9aaba3; --line: #263530;
+    --accent: #34d3b8; --accent-ink: #062019; --accent-soft: #123129;
+    --amber: #fbbf24; --amber-soft: #2e2410; --done: #4ade80; --done-soft: #12301d;
+    --bad: #f87171; --bad-soft: #3a1717;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* padding and borders count inside an element's width */
 }
 
 body {
   margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.5;
 }
 
 h1,
 h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 0 0 0.5rem;
 }
+h1 { font-size: 2.2rem; margin-top: 1.5rem; }
+h2 { font-size: 1.4rem; font-weight: 700; }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+a { color: var(--accent); }
+
+.container {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
+main.container { padding-bottom: 3rem; }
+
+.narrow { max-width: 520px; }
+
+.lead { color: var(--muted); margin-top: 0; }
+.muted { color: var(--muted); }
+.meta,
+.hint {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
+/* ---------- Header and nav ---------- */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.header-row {
+  display: flex;
+  flex-wrap: wrap; /* on narrow phones the links drop under the logo */
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.25rem;
+}
+.site-header nav a {
   display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.5rem;
+  color: var(--muted);
+  font-weight: 600;
+  text-decoration: none;
+}
+.site-header nav a.active { /* NavLink adds "active" to the link for the current page */
+  color: var(--accent);
+  box-shadow: inset 0 -3px 0 var(--accent);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* ---------- Cards ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* phones: one column */
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.card-grid .card { margin-bottom: 0; }
+@media (min-width: 640px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 960px) {
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* A listing card. Listings belong to sellers, so the material label is amber. */
+.listing-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.seller-label {
+  color: var(--amber);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.big-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin: 0;
+}
+.big-number .muted { font-size: 1.1rem; }
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.75rem;
+  margin: 0;
+}
+.facts dt {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding-top: 0.15rem;
+}
+.facts dd { margin: 0; }
+.description { margin: 0; }
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto; /* push buttons to the bottom of the card */
+  padding-top: 0.5rem;
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:disabled { opacity: 0.6; cursor: wait; }
+.button.primary { background: var(--accent); color: var(--accent-ink); }
+.button.ghost { background: transparent; color: var(--accent); border-color: var(--accent); }
+.button.warn { background: transparent; color: var(--bad); border-color: var(--bad); }
+.button.seller { background: var(--amber); color: var(--surface); }
+
+/* ---------- Forms ---------- */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.form label {
+  font-weight: 600;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.form label:first-child { margin-top: 0; }
+.form .button { margin-top: 1rem; }
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-height: 44px;
+  padding: 0.4rem 0.6rem;
+  width: 100%;
+}
+input:focus,
+select:focus,
+textarea:focus,
+.button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.hint { margin-top: 0.25rem; }
+.field-error {
+  color: var(--bad);
+  font-size: 0.95rem;
+  margin: 0.25rem 0 0;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.filters label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+@media (min-width: 640px) {
+  .filters { grid-template-columns: 1fr 1fr; max-width: 640px; }
+}
+
+/* ---------- Loading, empty, error and notice messages ---------- */
+.loading,
+.empty {
+  color: var(--muted);
+  padding: 1.5rem 0;
+}
+.error-box {
+  background: var(--bad-soft);
+  color: var(--bad);
+  border: 1px solid var(--bad);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  margin: 0.75rem 0;
+}
+.error-box p { margin: 0.25rem 0; }
+.notice {
+  background: var(--done-soft);
+  color: var(--done);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  margin: 0.75rem 0 0;
+}
+
+.load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
 }
