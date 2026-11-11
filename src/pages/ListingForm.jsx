@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
-import { api, errorMessages, getAll } from '../api.js';
+import { api, getAll } from '../api.js';
 import { useAuth } from '../AuthContext.jsx';
 import ErrorList from '../components/ErrorList.jsx';
 import FieldError from '../components/FieldError.jsx';
-import { formatKg, LOADING_TEXT, splitErrors, today } from '../helpers.js';
+import { formatKg, loadErrorMessages, LOADING_TEXT, splitErrors, today } from '../helpers.js';
 import { useApi } from '../useApi.js';
 
 // Used for both /listings/new and /listings/:id/edit.
@@ -21,7 +21,7 @@ export default function ListingForm() {
     return (
       <section className="narrow">
         <h1>{title}</h1>
-        <ErrorList messages={errorMessages(error)} />
+        <ErrorList messages={loadErrorMessages(error)} />
         <Link className="button ghost" to="/dashboard">Back to dashboard</Link>
       </section>
     );

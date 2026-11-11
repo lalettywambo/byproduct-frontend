@@ -23,6 +23,12 @@ export function formatQuantity(listing) {
   return formatKg(listing.kg);
 }
 
+// 2.14 -> "2.1 km away". Sellers in the same area as you are 0 km apart.
+export function formatDistance(km) {
+  if (km < 0.05) return 'Same area';
+  return `${km.toFixed(1)} km away`;
+}
+
 export const CONDITIONS = { sorted: 'Clean and sorted', mixed: 'Mixed' };
 
 // "2026-11-17" -> "17 Nov 2026". Built from the parts so the browser doesn't treat it as UTC.
@@ -47,6 +53,15 @@ export function listingStatus(listing) {
   if (listing.available_until < today()) return 'Expired';
   if (listing.kg_left <= 0) return 'All promised';
   return 'Withdrawn';
+}
+
+// For pages that load one need or listing. The API answers 404 both when it was deleted
+// and when it belongs to another business, so we explain both in plain words.
+export function loadErrorMessages(error) {
+  if (error instanceof ApiError && error.status === 404) {
+    return ["We couldn't find this. It may have been deleted, or it belongs to another business."];
+  }
+  return errorMessages(error);
 }
 
 // For action buttons: POST to e.g. /pickups/3/accept/ and return the API's "message".
