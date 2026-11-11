@@ -1,10 +1,14 @@
 import { CONDITIONS, formatDate, formatKg, formatPrice, formatQuantity } from '../helpers.js';
 
 // One listing as a card. Anything put inside <ListingCard>...</ListingCard> (like buttons) goes at the bottom.
-export default function ListingCard({ listing, children }) {
+// status is optional, e.g. "Live" or "Expired" on the dashboard.
+export default function ListingCard({ listing, status, children }) {
   return (
     <article className="card listing-card">
-      <p className="meta seller-label">{listing.material.name}</p>
+      <div className="row-head">
+        <p className="meta seller-label">{listing.material.name}</p>
+        {status && <span className={`tag ${status === 'Live' ? 'live' : ''}`}>{status}</span>}
+      </div>
       <p className="big-number">
         {formatKg(listing.kg_left)} <span className="muted">left</span>
       </p>
