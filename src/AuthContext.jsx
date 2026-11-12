@@ -1,7 +1,7 @@
 // Who is logged in, shared with every page. Use it with: const { business, login } = useAuth();
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { api, clearTokens, getRefreshToken, hasRefreshToken, saveTokens } from './api';
+import { api, ApiError, clearTokens, getRefreshToken, hasRefreshToken, saveTokens } from './api';
 
 const AuthContext = createContext(null);
 
@@ -17,7 +17,10 @@ export function AuthProvider({ children }) {
     if (!hasRefreshToken()) return;
     api('/me/')
       .then((data) => setBusiness(data.business))
-      .catch(() => clearTokens())
+      .catch((error) => {
+        // 401 = the saved login has run out. Offline or a sleeping server: keep it for next time.
+        if (error instanceof ApiError && error.status === 401) clearTokens();
+      })
       .finally(() => setLoading(false));
   }, []);
 

@@ -36,7 +36,7 @@ function refreshAccess() {
         body: JSON.stringify({ refresh: getRefreshToken() }),
       });
       if (!response.ok) {
-        clearTokens();
+        if (response.status === 401) clearTokens(); // the login ran out or was logged out
         return false;
       }
       saveTokens(await response.json()); // the server sends a new refresh token too
