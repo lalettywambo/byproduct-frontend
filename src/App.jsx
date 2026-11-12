@@ -4,6 +4,7 @@ import RequireAuth from './components/RequireAuth.jsx';
 import Browse from './pages/Browse.jsx';
 import Login from './pages/Login.jsx';
 import SignUp from './pages/SignUp.jsx';
+import Impact from './pages/Impact.jsx';
 import Profile from './pages/Profile.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import ListingForm from './pages/ListingForm.jsx';
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/" element={<Browse />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/impact" element={<Impact />} />
         <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
         <Route path="/listings/new" element={<RequireAuth><ListingForm /></RequireAuth>} />
