@@ -60,6 +60,8 @@ The API runs on Render's free plan, which sleeps when nobody uses it. The first 
 
 Anything else shows a "Page not found" page.
 
+The dashboard and need page check for changes every 10 seconds while the tab is open, so the other business's answers show up without a reload.
+
 ## Folder layout
 
 ```
@@ -71,6 +73,7 @@ src/
   api.js                  every API request goes through api() here; also the login tokens
   AuthContext.jsx         who is logged in: login, register, logout, delete account
   useApi.js               a hook that loads data for a page: { data, error, loading, reload }
+  usePolling.js           a hook that calls reload() every 10 seconds while the tab is visible
   helpers.js              formatting (kg, price, dates, distance) and form-error helpers
   index.css               the design: colour tokens (with dark mode), layout, cards, buttons
   components/             pieces used by several pages
