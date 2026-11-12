@@ -11,6 +11,7 @@ import {
   formatDate, formatDistance, formatKg, loadErrorMessages, LOADING_TEXT, postAction,
 } from '../helpers.js';
 import { useApi } from '../useApi.js';
+import { usePolling } from '../usePolling.js';
 
 // The buyer's main screen for one need: progress, sellers to ask, and the requests already sent.
 export default function NeedPage() {
@@ -20,6 +21,9 @@ export default function NeedPage() {
   const navigate = useNavigate();
   const need = useApi(`/needs/${id}/`);
   const plan = useApi(`/needs/${id}/suggestions/`);
+  // Check for the sellers' answers every 10 seconds.
+  usePolling(need.reload, need.loading);
+  usePolling(plan.reload, plan.loading);
   // The need form sends us here with a notice like "Need saved."
   const [notice, setNotice] = useState(location.state?.notice || '');
 

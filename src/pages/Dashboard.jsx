@@ -10,12 +10,14 @@ import PickupRow from '../components/PickupRow.jsx';
 import ProgressBar from '../components/ProgressBar.jsx';
 import { formatDate, formatKg, listingStatus, LOADING_TEXT, postAction } from '../helpers.js';
 import { useApi } from '../useApi.js';
+import { usePolling } from '../usePolling.js';
 
 export default function Dashboard() {
   const { business } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const me = useApi('/me/');
+  usePolling(me.reload, me.loading); // check for the other side's answers every 10 seconds
   // The listing form sends us here with a notice like "Listing saved."
   const [notice, setNotice] = useState(location.state?.notice || '');
 
