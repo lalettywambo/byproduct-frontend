@@ -3,7 +3,7 @@ import { useAuth } from '../AuthContext.jsx';
 
 // The header and nav on every page. <Outlet /> is where the current page appears.
 export default function Layout() {
-  const { business } = useAuth();
+  const { business, loading } = useAuth();
 
   return (
     <>
@@ -13,7 +13,8 @@ export default function Layout() {
           <nav aria-label="Main">
             <NavLink to="/" end>Browse</NavLink>
             <NavLink to="/impact">Impact</NavLink>
-            {business ? (
+            {/* While a saved login is being checked, show neither set of links. */}
+            {loading ? null : business ? (
               <>
                 <NavLink to="/dashboard">Dashboard</NavLink>
                 <NavLink to="/profile">Profile</NavLink>
