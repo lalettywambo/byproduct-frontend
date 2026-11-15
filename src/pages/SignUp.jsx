@@ -43,7 +43,7 @@ export default function SignUp() {
   return (
     <section className="narrow">
       <h1>Sign up</h1>
-      <p className="lead">One login per business. You can sell leftovers and post what you need.</p>
+      <p className="lead">One login per business. You can list your leftovers and request material you need.</p>
 
       {areas.loading && <p className="loading">{LOADING_TEXT}</p>}
       <ErrorList messages={areas.error && errorMessages(areas.error)} />

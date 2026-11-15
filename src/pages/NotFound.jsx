@@ -5,7 +5,7 @@ export default function NotFound() {
     <section className="narrow">
       <h1>Page not found</h1>
       <p>There's nothing at this address.</p>
-      <Link className="button primary" to="/">Browse leftovers</Link>
+      <Link className="button primary" to="/">Go to the home page</Link>
     </section>
   );
 }

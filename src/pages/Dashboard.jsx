@@ -60,7 +60,7 @@ export default function Dashboard() {
       </p>
       <div className="actions top-actions">
         <Link className="button seller" to="/listings/new">List waste</Link>
-        <Link className="button primary" to="/needs/new">Post a need</Link>
+        <Link className="button primary" to="/needs/new">Request material</Link>
       </div>
 
       <section className="dash-section">
@@ -135,7 +135,7 @@ export default function Dashboard() {
       <section className="dash-section">
         <h2>My open needs</h2>
         {open_needs.length === 0 ? (
-          <p className="empty">No open needs. Tap “Post a need” when you're looking for material.</p>
+          <p className="empty">No open needs. Tap “Request material” when you're looking for material.</p>
         ) : (
           <div className="card-grid">
             {open_needs.map((need) => (

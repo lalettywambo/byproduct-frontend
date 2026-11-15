@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router';
 import Layout from './components/Layout.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
+import Home from './pages/Home.jsx';
 import Browse from './pages/Browse.jsx';
 import Login from './pages/Login.jsx';
 import SignUp from './pages/SignUp.jsx';
@@ -16,7 +17,8 @@ export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Browse />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/browse" element={<Browse />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/impact" element={<Impact />} />

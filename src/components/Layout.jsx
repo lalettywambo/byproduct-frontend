@@ -11,7 +11,8 @@ export default function Layout() {
         <div className="container header-row">
           <Link to="/" className="brand">ByProduct</Link>
           <nav aria-label="Main">
-            <NavLink to="/" end>Browse</NavLink>
+            <NavLink to="/" end>Home</NavLink>
+            <NavLink to="/browse">Browse</NavLink>
             <NavLink to="/impact">Impact</NavLink>
             {/* While a saved login is being checked, show neither set of links. */}
             {loading ? null : business ? (

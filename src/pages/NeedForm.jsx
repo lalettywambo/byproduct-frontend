@@ -10,11 +10,17 @@ import { useApi } from '../useApi.js';
 // This part loads what the form needs; NeedEditor below is the form itself.
 export default function NeedForm() {
   const { id } = useParams(); // undefined on /needs/new
-  const [searchParams] = useSearchParams(); // ?material=1 from Browse's "Need this?" button
+  const [searchParams] = useSearchParams(); // ?material=1 from Browse's "Request this material" button
+  const startMaterial = searchParams.get('material') || '';
   const materials = useApi('/materials/', getAll);
   // Only the buyer can load their own need: anyone else gets "Not found." from the API.
   const need = useApi(id ? `/needs/${id}/` : null);
-  const title = id ? 'Edit need' : 'Post a need';
+
+  // From a listing: "Request Sawdust". Otherwise "Request material", or "Edit need" when editing.
+  const material = (materials.data || []).find((m) => String(m.id) === startMaterial);
+  let title = 'Request material';
+  if (id) title = 'Edit need';
+  else if (material) title = `Request ${material.name}`;
 
   const error = materials.error || need.error;
   if (error) {
@@ -47,11 +53,14 @@ export default function NeedForm() {
   return (
     <section className="narrow">
       <h1>{title}</h1>
+      {!id && (
+        <p className="lead">Say how much you need. Next you'll see the nearest sellers and send them your request.</p>
+      )}
       <NeedEditor
         key={id || 'new'}
         need={need.data}
         materials={materials.data}
-        startMaterial={searchParams.get('material') || ''}
+        startMaterial={startMaterial}
       />
     </section>
   );
@@ -98,7 +107,9 @@ function NeedEditor({ need, materials, startMaterial }) {
         navigate(`/needs/${need.id}`, { state: { notice: 'Need saved.' } });
       } else {
         const created = await api('/needs/', { method: 'POST', body });
-        navigate(`/needs/${created.id}`, { state: { notice: 'Need posted. Here are the sellers near you.' } });
+        navigate(`/needs/${created.id}`, {
+          state: { notice: 'Saved. Here are the nearest sellers: send them your request.' },
+        });
       }
     } catch (error) {
       setErrors(splitErrors(error, FIELDS));
@@ -174,9 +185,12 @@ function NeedEditor({ need, materials, startMaterial }) {
 
       <ErrorList messages={errors.general} />
       <button type="submit" className="button primary" disabled={busy}>
-        {busy ? 'Saving…' : need ? 'Save changes' : 'Post need'}
+        {busy ? 'Saving…' : need ? 'Save changes' : 'Find sellers'}
       </button>
-      <Link className="button ghost" to={need ? `/needs/${need.id}` : '/dashboard'}>Cancel</Link>
+      {/* Cancel goes back where the form was opened from: the need, Browse, or the dashboard. */}
+      <Link className="button ghost" to={need ? `/needs/${need.id}` : startMaterial ? '/browse' : '/dashboard'}>
+        Cancel
+      </Link>
     </form>
   );
 }

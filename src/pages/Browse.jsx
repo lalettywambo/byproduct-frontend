@@ -7,9 +7,9 @@ import ListingCard from '../components/ListingCard.jsx';
 import { LOADING_TEXT } from '../helpers.js';
 import { useApi } from '../useApi.js';
 
-// Home page: every live listing, filtered by material and area.
+// Browse (/browse): every live listing, filtered by material and area.
 export default function Browse() {
-  const { business, loading: checkingLogin } = useAuth();
+  const { business } = useAuth();
   const [material, setMaterial] = useState(''); // '' = all
   const [area, setArea] = useState('');
   const materials = useApi('/materials/', getAll);
@@ -46,15 +46,8 @@ export default function Browse() {
 
   return (
     <>
-      {/* Only for visitors who aren't logged in (and not while we're still checking). */}
-      {!checkingLogin && !business && (
-        <section className="welcome">
-          <p className="welcome-line">One business's waste is another business's raw material.</p>
-          <Link className="button primary" to="/sign-up">Sign up</Link>
-        </section>
-      )}
       <h1>Leftovers near you</h1>
-      <p className="lead">Live listings from Nairobi businesses. Ask for what you need and collect it.</p>
+      <p className="lead">See something you can use? Request it. The seller gets your request and can accept it.</p>
 
       <div className="filters">
         <div>
@@ -107,7 +100,7 @@ export default function Browse() {
                 {/* No point asking for your own leftovers. */}
                 {listing.seller.id !== business?.id && (
                   <Link className="button ghost" to={`/needs/new?material=${listing.material.id}`}>
-                    Need this? Post a need
+                    Request this material
                   </Link>
                 )}
               </ListingCard>
