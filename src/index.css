@@ -228,6 +228,16 @@ a:focus-visible {
   outline-offset: 2px;
 }
 .hint { margin-top: 0.25rem; }
+/* A password box with its Show/Hide button beside it. */
+.password-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.password-row input {
+  flex: 1;
+  min-width: 0; /* lets the box shrink on narrow phones instead of pushing the button off screen */
+}
+.form .password-row .button { margin-top: 0; }
 .field-error {
   color: var(--bad);
   font-size: 0.95rem;

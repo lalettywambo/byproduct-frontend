@@ -88,3 +88,8 @@ export function splitErrors(error, formFields) {
   }
   return { fields, general };
 }
+
+// For forms that ask for a password twice: the message to show, or '' when both are the same.
+export function passwordMismatch(password, confirm) {
+  return password === confirm ? '' : "The two passwords don't match.";
+}

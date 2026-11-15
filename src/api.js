@@ -87,6 +87,16 @@ export async function api(path, { method = 'GET', body } = {}) {
   return data;
 }
 
+// Forgot password, step 1: ask for an emailed reset link. The API answers the same for every email.
+export function requestPasswordReset(email) {
+  return api('/auth/password-reset/', { method: 'POST', body: { email } });
+}
+
+// Forgot password, step 2: set a new password with the uid and token from the emailed link.
+export function resetPassword(uid, token, password) {
+  return api('/auth/password-reset/confirm/', { method: 'POST', body: { uid, token, password } });
+}
+
 // For lists the API splits into pages ({count, next, previous, results}): fetch every page.
 export async function getAll(path) {
   let items = [];

@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { ApiError } from './api.js';
 import {
   formatDate, formatDistance, formatKg, formatPrice, formatQuantity,
-  listingStatus, loadErrorMessages, splitErrors, today,
+  listingStatus, loadErrorMessages, passwordMismatch, splitErrors, today,
 } from './helpers.js';
 
 describe('formatKg', () => {
@@ -125,5 +125,16 @@ describe('splitErrors', () => {
       fields: {},
       general: ["Can't reach the server. Check your internet and try again."],
     });
+  });
+});
+
+describe('passwordMismatch', () => {
+  test('no message when both passwords are the same', () => {
+    expect(passwordMismatch('Sawdust-2026', 'Sawdust-2026')).toBe('');
+  });
+  test('a message when they differ, even by capitals or a space', () => {
+    expect(passwordMismatch('Sawdust-2026', 'sawdust-2026')).toBe("The two passwords don't match.");
+    expect(passwordMismatch('Sawdust-2026', 'Sawdust-2026 ')).toBe("The two passwords don't match.");
+    expect(passwordMismatch('Sawdust-2026', '')).toBe("The two passwords don't match.");
   });
 });
