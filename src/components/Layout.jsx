@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet } from 'react-router';
 import { useAuth } from '../AuthContext.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 // The header and nav on every page. <Outlet /> is where the current page appears.
 export default function Layout() {
@@ -10,6 +11,7 @@ export default function Layout() {
       <header className="site-header">
         <div className="container header-row">
           <Link to="/" className="brand">ByProduct</Link>
+          <ThemeToggle />
           <nav aria-label="Main">
             <NavLink to="/" end>Home</NavLink>
             <NavLink to="/browse">Browse</NavLink>

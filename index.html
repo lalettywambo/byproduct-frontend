@@ -8,6 +8,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Hanken+Grotesk:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
     <title>ByProduct</title>
+    <script>
+      // Runs before the page paints: use the theme saved by the header button, so the wrong one never flashes.
+      // With nothing saved, the CSS follows the device's light/dark setting.
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved);
+      } catch (error) { /* storage is blocked: follow the device */ }
+    </script>
   </head>
   <body>
     <div id="root"></div>
